@@ -3,6 +3,7 @@ class GUI {
         this.xhr = new XMLHttpRequest();
         this.ctx = null;
         this.c = null;
+        this.type = "REST";
     }
     init() {
         this.c = document.getElementById("hang");
@@ -34,10 +35,16 @@ class GUI {
             this.print("word", obj.word);
         };
         let select = document.querySelector("#lang");
-        this.xhr.open("post", "ServletForca");
         let formData = new FormData();
-        formData.append("lang", select.value);
-        this.xhr.send(formData);
+        formData.append("value", select.value);
+        if (this.type == "Servlet") {
+            this.xhr.open("post", "ServletForca");
+            this.xhr.send(formData);
+        } else {
+            this.xhr.open("post", "webresources/hangman");
+            this.xhr.setRequestHeader("Content-Type", "application/json");
+            this.xhr.send(JSON.stringify(Object.fromEntries(formData)));
+        }
     }
     print(id, vector) {
         let str = "";
@@ -103,10 +110,16 @@ class GUI {
                         break;
                 }
             };
-            this.xhr.open("put", "ServletForca");
             let formData = new FormData();
-            formData.append("letter", ev.key);
-            this.xhr.send(formData);
+            formData.append("value", ev.key);
+            if (this.type == "Servlet") {
+                this.xhr.open("put", "ServletForca");
+                this.xhr.send(formData);
+            } else {
+                this.xhr.open("put", "webresources/hangman");
+                this.xhr.setRequestHeader("Content-Type", "application/json");
+                this.xhr.send(JSON.stringify(Object.fromEntries(formData)));
+            }
         }
     }
 }
