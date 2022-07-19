@@ -31,11 +31,7 @@ class GUI {
         this.ctx.stroke();
         this.xhr.onload = () => {
             let obj = JSON.parse(this.xhr.responseText);
-            let str = "";
-            for (const letter of obj.word) {
-                str += " " + letter;
-            }
-            this.setMessage("word", str);
+            this.print("word", obj.word);
         };
         let select = document.querySelector("#lang");
         this.xhr.open("post", "ServletForca");
@@ -43,20 +39,19 @@ class GUI {
         formData.append("lang", select.value);
         this.xhr.send(formData);
     }
+    print(id, vector) {
+        let str = "";
+        for (const letter of vector) {
+            str += " " + letter;
+        }
+        this.setMessage(id, str);
+    }
     sendLetter(ev) {
         if (ev.key >= 'a' && ev.key <= 'z') {
             this.xhr.onload = () => {
                 let obj = JSON.parse(this.xhr.responseText);
-                let str = "";
-                for (const letter of obj.word) {
-                    str += " " + letter;
-                }
-                this.setMessage("word", str);
-                str = "Letters: ";
-                for (let i = 0; i < obj.wrongChars.length; i++) {
-                    str += " " + obj.wrongChars[i] + " ";
-                }
-                this.setMessage("letters", str);
+                this.print("word", obj.word);
+                this.print("letters", obj.wrongChars);
                 switch (obj.winner) {
                     case "WIN":
                         this.setMessage("message", "You win!");
