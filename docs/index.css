@@ -1,0 +1,32 @@
+body {
+    --color-tone-2: #d3d6da;
+    --key-text-color: #1a1a1b;
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+main {
+    text-align: center;
+}
+
+div {
+    font-size: x-large;
+    padding-bottom: 20px;
+}
+
+.row {
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+
+button {
+    font-size: 0.8em;
+    font-weight: bold;
+    border: 0;
+    padding: 1.3em;
+    margin-right: 0.4em;
+    height: 5em;
+    border-radius: 0.4em;
+    cursor: pointer;
+    background-color: var(--color-tone-2);
+    color: var(--key-text-color);
+}

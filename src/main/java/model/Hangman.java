@@ -62,6 +62,6 @@ public class Hangman {
     }
 
     public Winner getWinner() {
-        return winner;
+        return this.winner;
     }
 }
