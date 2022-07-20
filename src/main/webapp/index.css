@@ -1,8 +1,81 @@
+body {
+    --color-tone-2: #d3d6da;
+    --key-text-color: #1a1a1b;
+    --correct-color: #6aaa64;
+    --absent-color: #787c7e;
+    --border-size: 2px;
+    --code-color: white;
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
 main {
+    text-align: center;
+    margin: 0 auto;
+}
+
+table, main > div {
+    font-size: x-large;
+    margin: 1.5em auto;
+}
+
+.row {
+    margin-bottom: 0.5em;
     text-align: center;
 }
 
-div {
-    font-size: x-large;
-    padding-bottom: 20px;
+td {
+    width: 1.5em;
+    height: 1.5em;
+    padding: 5px;
+    margin: 5px;
+    border: var(--border-size) solid var(--absent-color);
+}
+
+button {
+    font-size: 0.4em;
+    font-weight: bold;
+    border: 0;
+    padding: 1em;
+    margin-right: 0.2em;
+    height: 5em;
+    border-radius: 0.4em;
+    cursor: pointer;
+    background-color: var(--color-tone-2);
+    color: var(--key-text-color);
+}
+
+.present {
+    background-color: var(--correct-color);
+    border: var(--border-size) solid var(--correct-color);
+    color: var(--code-color);
+}
+
+.absent {
+    background-color: var(--absent-color);
+    border: var(--border-size) solid var(--absent-color);
+    color: var(--code-color);
+}
+
+.none {
+    border: 0;
+}
+
+td[data-animation="flip"] {
+    animation-name: Flip;
+    animation-duration: 1000ms;
+    background-color: var(--correct-color);
+    border: var(--border-size) solid var(--correct-color);
+    color: var(--code-color);
+}
+
+@keyframes Flip {
+    0% {
+        transform: rotateX(0);
+    }
+    50% {
+        transform: rotateX(-90deg);        
+    }
+    100% {
+        transform: rotateX(0);
+    }
 }
