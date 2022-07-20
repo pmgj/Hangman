@@ -10,7 +10,6 @@ body {
 
 main {
     text-align: center;
-    width: 500px;
     margin: 0 auto;
 }
 
@@ -25,9 +24,8 @@ table, main > div {
 }
 
 td {
-    width: 1.1em;
-    height: 1.1em;
-    display: table-cell;
+    width: 1.5em;
+    height: 1.5em;
     padding: 5px;
     margin: 5px;
     border: var(--border-size) solid var(--absent-color);
@@ -56,6 +54,10 @@ button {
     background-color: var(--absent-color);
     border: var(--border-size) solid var(--absent-color);
     color: var(--code-color);
+}
+
+.none {
+    border: 0;
 }
 
 td[data-animation="flip"] {

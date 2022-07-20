@@ -37,15 +37,15 @@ class GUI {
             this.ctx.lineTo(70, 20);
             this.ctx.lineTo(70, 30);
             this.ctx.stroke();
-            this.printBoxes(this.game.getWord().length);
+            this.printBoxes(this.game.getWord());
             document.onkeyup = this.sendLetter.bind(this);
             this.keys.forEach(k => k.className = "");
         });
     }
-    printBoxes(boxes) {
+    printBoxes(vector) {
         let str = "<tr>";
-        for (let i = 0; i < boxes; i++) {
-            str += "<td></td>";
+        for (let letter of vector) {
+            str += letter === "-" ? "<td class='none'>&ndash;</td>" : "<td></td>";
         }
         str += "</tr>"
         this.setMessage("word", str);
@@ -54,7 +54,7 @@ class GUI {
         let divs = document.querySelectorAll("#word td");
         for (let i = 0; i < vector.length; i++) {
             let letter = vector[i];
-            if (letter !== '_' && !divs[i].dataset.animation) {
+            if (letter !== '_' && letter !== '-' && !divs[i].dataset.animation) {
                 divs[i].dataset.animation = "flip";
                 divs[i].innerHTML = letter;
             }
@@ -66,6 +66,40 @@ class GUI {
         }
         this.check(ev.key);
     }
+    printHangman() {
+        switch (this.game.getWrongChars().length) {
+            case 1:
+                this.ctx.beginPath();
+                this.ctx.arc(70, 40, 10, 0, 2 * Math.PI);
+                this.ctx.stroke();
+                break;
+            case 2:
+                this.ctx.moveTo(70, 50);
+                this.ctx.lineTo(70, 80);
+                this.ctx.stroke();
+                break;
+            case 3:
+                this.ctx.moveTo(70, 60);
+                this.ctx.lineTo(50, 60);
+                this.ctx.stroke();
+                break;
+            case 4:
+                this.ctx.moveTo(70, 60);
+                this.ctx.lineTo(90, 60);
+                this.ctx.stroke();
+                break;
+            case 5:
+                this.ctx.moveTo(70, 80);
+                this.ctx.lineTo(50, 100);
+                this.ctx.stroke();
+                break;
+            case 6:
+                this.ctx.moveTo(70, 80);
+                this.ctx.lineTo(90, 100);
+                this.ctx.stroke();
+                break;
+        }
+    }
     check(letter) {
         try {
             this.game.check(letter);
@@ -73,48 +107,18 @@ class GUI {
             let button = document.querySelector(`button[data-value='${letter}']`);
             switch (this.game.getWinner()) {
                 case Winner.WIN:
-                    button.className = "present";
                     this.setMessage("message", "You win!");
+                    button.className = "present";
                     break;
                 case Winner.LOSE:
                     this.setMessage("message", "You lose!");
                     button.className = "absent";
+                    this.printHangman();
                     break;
                 case Winner.WRONG_LETTER:
-                    button.className = "absent";
-                    switch (this.game.getWrongChars().length) {
-                        case 1:
-                            this.ctx.beginPath();
-                            this.ctx.arc(70, 40, 10, 0, 2 * Math.PI);
-                            this.ctx.stroke();
-                            break;
-                        case 2:
-                            this.ctx.moveTo(70, 50);
-                            this.ctx.lineTo(70, 80);
-                            this.ctx.stroke();
-                            break;
-                        case 3:
-                            this.ctx.moveTo(70, 60);
-                            this.ctx.lineTo(50, 60);
-                            this.ctx.stroke();
-                            break;
-                        case 4:
-                            this.ctx.moveTo(70, 60);
-                            this.ctx.lineTo(90, 60);
-                            this.ctx.stroke();
-                            break;
-                        case 5:
-                            this.ctx.moveTo(70, 80);
-                            this.ctx.lineTo(50, 100);
-                            this.ctx.stroke();
-                            break;
-                        case 6:
-                            this.ctx.moveTo(70, 80);
-                            this.ctx.lineTo(90, 100);
-                            this.ctx.stroke();
-                            break;
-                    }
                     this.setMessage("message", "");
+                    button.className = "absent";
+                    this.printHangman();
                     break;
                 case Winner.CORRECT_LETTER:
                     this.setMessage("message", "");

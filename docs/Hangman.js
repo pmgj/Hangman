@@ -13,7 +13,7 @@ export default class Hangman {
         words = words.filter(e => e.length > 2);
         let x = Math.floor(Math.random() * words.length);
         let w = words[x].split('');
-        this.maskedWord = w.map(c => (c === " ") ? " " : (c === "-") ? " &ndash; " : "_");
+        this.maskedWord = w.map(c => c === "-" ? "-" : "_");
         return w;
     }
     getWord() {
@@ -39,7 +39,7 @@ export default class Hangman {
         this.triedChars.push(letter);
         this.maskedWord = [];
         for (const letter of this.word) {
-            this.maskedWord.push(this.triedChars.includes(letter) ? letter : letter === '-' ? ' &ndash; ' : '_');
+            this.maskedWord.push(this.triedChars.includes(letter) ? letter : letter === '-' ? '-' : '_');
         }
         if (this.word.some(c => c === letter)) {
             this.winner = this.maskedWord.every(c => c !== "_") ? Winner.WIN : Winner.CORRECT_LETTER;
