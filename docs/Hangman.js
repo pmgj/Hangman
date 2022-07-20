@@ -26,6 +26,9 @@ export default class Hangman {
         return this.winner;
     }
     check(v) {
+        if(this.winner === Winner.LOSE || this.winner === Winner.WIN) {
+            return;
+        }
         let letter = v.toUpperCase();
         if (letter < 'A' || letter > 'Z') {
             throw new Error("Type a valid character.");

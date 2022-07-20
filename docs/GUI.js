@@ -7,12 +7,12 @@ class GUI {
         this.ctx = null;
         this.c = document.querySelector("#hang");
         this.select = document.querySelector("#lang");
+        this.keys = document.querySelectorAll("button");
     }
     init() {
         let button = document.querySelector("input[type='button']");
         button.onclick = this.start.bind(this);
-        let keys = document.querySelectorAll("button");
-        keys.forEach(k => k.onclick = this.buttonClicked.bind(this));
+        this.keys.forEach(k => k.onclick = this.buttonClicked.bind(this));
         this.start();
     }
     buttonClicked(evt) {
@@ -25,7 +25,6 @@ class GUI {
     start() {
         import(`./words_${this.select.value}.js`).then(module => {
             this.game = new Hangman(module.words);
-            this.setMessage("letters", "");
             this.setMessage("message", "");
             this.setMessage("word", "");
             this.ctx = this.c.getContext("2d");
@@ -38,16 +37,28 @@ class GUI {
             this.ctx.lineTo(70, 20);
             this.ctx.lineTo(70, 30);
             this.ctx.stroke();
-            this.print("word", this.game.getWord());
+            this.printBoxes(this.game.getWord().length);
             document.onkeyup = this.sendLetter.bind(this);
+            this.keys.forEach(k => k.className = "");
         });
     }
-    print(id, vector) {
-        let str = "";
-        for (const letter of vector) {
-            str += " " + letter;
+    printBoxes(boxes) {
+        let str = "<tr>";
+        for (let i = 0; i < boxes; i++) {
+            str += "<td></td>";
         }
-        this.setMessage(id, str);
+        str += "</tr>"
+        this.setMessage("word", str);
+    }
+    printLetter(vector) {
+        let divs = document.querySelectorAll("#word td");
+        for (let i = 0; i < vector.length; i++) {
+            let letter = vector[i];
+            if (letter !== '_' && !divs[i].dataset.animation) {
+                divs[i].dataset.animation = "flip";
+                divs[i].innerHTML = letter;
+            }
+        }
     }
     sendLetter(ev) {
         if (ev.key < 'a' || ev.key > 'z') {
@@ -58,16 +69,19 @@ class GUI {
     check(letter) {
         try {
             this.game.check(letter);
-            this.print("word", this.game.getWord());
-            this.print("letters", this.game.getWrongChars());
+            this.printLetter(this.game.getWord());
+            let button = document.querySelector(`button[data-value='${letter}']`);
             switch (this.game.getWinner()) {
                 case Winner.WIN:
+                    button.className = "present";
                     this.setMessage("message", "You win!");
                     break;
                 case Winner.LOSE:
-                    document.onkeyup = undefined;
                     this.setMessage("message", "You lose!");
+                    button.className = "absent";
+                    break;
                 case Winner.WRONG_LETTER:
+                    button.className = "absent";
                     switch (this.game.getWrongChars().length) {
                         case 1:
                             this.ctx.beginPath();
@@ -100,13 +114,15 @@ class GUI {
                             this.ctx.stroke();
                             break;
                     }
+                    this.setMessage("message", "");
                     break;
                 case Winner.CORRECT_LETTER:
                     this.setMessage("message", "");
+                    button.className = "present";
                     break;
             }
         } catch (ex) {
-            this.setMessage("message", ex.message);
+            console.log(ex.message);
         }
     }
 }
