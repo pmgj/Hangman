@@ -3,7 +3,7 @@ body {
     --key-text-color: #1a1a1b;
     --correct-color: #6aaa64;
     --absent-color: #787c7e;
-    --border-size: 2px;
+    --border-size: 1px;
     --code-color: white;
     font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
@@ -13,9 +13,11 @@ main {
     margin: 0 auto;
 }
 
-table, main > div {
+table,
+main>div {
     font-size: x-large;
     margin: 1.5em auto;
+    border-spacing: 5px;
 }
 
 .row {
@@ -29,6 +31,7 @@ td {
     padding: 5px;
     margin: 5px;
     border: var(--border-size) solid var(--absent-color);
+    border-radius: 0.2em;
 }
 
 button {
@@ -72,9 +75,11 @@ td[data-animation="flip"] {
     0% {
         transform: rotateX(0);
     }
+
     50% {
-        transform: rotateX(-90deg);        
+        transform: rotateX(-90deg);
     }
+
     100% {
         transform: rotateX(0);
     }
