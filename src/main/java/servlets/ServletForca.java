@@ -26,7 +26,7 @@ public class ServletForca extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
-        String lang = request.getParameter("value");
+        String lang = request.getHeader("Accept-Language");
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(String.format("words_%s.json", lang));
         List<String> list = JsonbBuilder.create().fromJson(inputStream, List.class);
         int i = new Random().nextInt(list.size());
@@ -45,16 +45,16 @@ public class ServletForca extends HttpServlet {
         HttpSession session = request.getSession();
         Hangman game = (Hangman) session.getAttribute("game");
         String letter = request.getParameter("value");
-        PrintWriter out = response.getWriter();
         char c = letter.charAt(0);
         try {
             game.check(c);
+            if (game.getWinner() == Winner.LOSE) {
+                session.invalidate();
+            }
         } catch (Exception e) {
 
         }
-        if(game.getWinner() == Winner.LOSE) {
-            session.invalidate();
-        }
+        PrintWriter out = response.getWriter();
         out.print(JsonbBuilder.create().toJson(game));
     }
 }

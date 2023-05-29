@@ -5,7 +5,8 @@ class GUI {
         this.c = document.getElementById("hang");
         this.select = document.querySelector("#lang");
         this.keys = document.querySelectorAll("button");
-        this.type = "REST";
+        // this.uri = "ServletForca";
+        this.uri = "webresources/hangman";
     }
     init() {
         let button = document.querySelector("input[type='button']");
@@ -39,16 +40,9 @@ class GUI {
             let obj = JSON.parse(this.xhr.responseText);
             this.printBoxes(obj.word);
         };
-        let formData = new FormData();
-        formData.append("value", this.select.value);
-        if (this.type == "Servlet") {
-            this.xhr.open("post", "ServletForca");
-            this.xhr.send(formData);
-        } else {
-            this.xhr.open("post", "webresources/hangman");
-            this.xhr.setRequestHeader("Content-Type", "application/json");
-            this.xhr.send(JSON.stringify(Object.fromEntries(formData)));
-        }
+        this.xhr.open("post", this.uri);
+        this.xhr.setRequestHeader("Accept-Language", this.select.value);
+        this.xhr.send();
     }
     printBoxes(vector) {
         let str = "<tr>";
@@ -69,9 +63,6 @@ class GUI {
         }
     }
     sendLetter(ev) {
-        if (ev.key < 'a' || ev.key > 'z') {
-            return;
-        }
         this.check(ev.key);
     }
     printHangman(errors) {
@@ -139,14 +130,8 @@ class GUI {
         };
         let formData = new FormData();
         formData.append("value", letter);
-        if (this.type == "Servlet") {
-            this.xhr.open("put", "ServletForca");
-            this.xhr.send(formData);
-        } else {
-            this.xhr.open("put", "webresources/hangman");
-            this.xhr.setRequestHeader("Content-Type", "application/json");
-            this.xhr.send(JSON.stringify(Object.fromEntries(formData)));
-        }
+        this.xhr.open("put", this.uri);
+        this.xhr.send(formData);
     }
 }
 let gui = new GUI();
