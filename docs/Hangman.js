@@ -10,9 +10,9 @@ export default class Hangman {
         this.word = this.selectWord(dictionary);
     }
     selectWord(words) {
-        words = words.filter(e => e.length > 2);
+        words = words.filter(w => w.length > 2 && w.length < 8 && !w.includes(" ") && !w.includes("-"));
         let x = Math.floor(Math.random() * words.length);
-        let w = words[x].split('');
+        let w = words[x].toUpperCase().split('');
         this.maskedWord = w.map(c => c === "-" ? "-" : "_");
         return w;
     }
