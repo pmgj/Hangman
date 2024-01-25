@@ -13,16 +13,15 @@ main {
     margin: 0 auto;
 }
 
+table {
+    border-collapse: separate;
+}
+
 table,
 main>div {
     font-size: x-large;
     margin: 1.5em auto;
     border-spacing: 5px;
-}
-
-.row {
-    margin-bottom: 0.5em;
-    text-align: center;
 }
 
 td {
@@ -32,19 +31,6 @@ td {
     margin: 5px;
     border: var(--border-size) solid var(--absent-color);
     border-radius: 0.2em;
-}
-
-button {
-    font-size: 0.4em;
-    font-weight: bold;
-    border: 0;
-    padding: 1em;
-    margin-right: 0.2em;
-    height: 5em;
-    border-radius: 0.4em;
-    cursor: pointer;
-    background-color: var(--color-tone-2);
-    color: var(--key-text-color);
 }
 
 .present {

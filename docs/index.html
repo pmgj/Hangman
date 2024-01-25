@@ -5,58 +5,68 @@
     <title>Hangman</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="index.css">
     <link rel="icon" type="image/svg" href="favicon.svg">
-    <script type="module" src="GUI.js"></script>
+    <script type="module" src="scripts/GUI.js"></script>
 </head>
 
 <body>
     <main>
         <h1>Hangman</h1>
-        <div>
-            <form>
-                <label for="lang">Language:</label>
-                <select id="lang">
-                    <option value="pt">Português</option>
-                    <option value="en">English</option>
-                </select>
-                <input type="button" value="Start">
-            </form>
-        </div>
+        <form action="#" class="container mb-2">
+            <div class="d-flex justify-content-center mt-2">
+                <div class="p-2 mt-2">
+                    <label for="lang">Language:</label>
+                </div>
+                <div class="p-2">
+                    <select id="lang" class="form-select">
+                        <option value="pt">Português</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <div class="p-2">
+                    <input type="button" value="Start" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
         <canvas id="hang" width="100"></canvas>
         <table id="word"></table>
         <div id="keyboard">
-            <div class="row">
-                <button data-value="q">Q</button>
-                <button data-value="w">W</button>
-                <button data-value="e">E</button>
-                <button data-value="r">R</button>
-                <button data-value="t">T</button>
-                <button data-value="y">Y</button>
-                <button data-value="u">U</button>
-                <button data-value="i">I</button>
-                <button data-value="o">O</button>
-                <button data-value="p">P</button>
+            <div class="d-flex justify-content-center mt-2">
+                <div class="p-1"><button data-value="e" class="btn btn-secondary">E</button></div>
+                <div class="p-1"><button data-value="r" class="btn btn-secondary">R</button></div>
+                <div class="p-1"><button data-value="t" class="btn btn-secondary">T</button></div>
+                <div class="p-1"><button data-value="y" class="btn btn-secondary">Y</button></div>
+                <div class="p-1"><button data-value="u" class="btn btn-secondary">U</button></div>
+                <div class="p-1"><button data-value="i" class="btn btn-secondary">I</button></div>
+                <div class="p-1"><button data-value="o" class="btn btn-secondary">O</button></div>
             </div>
-            <div class="row">
-                <button data-value="a">A</button>
-                <button data-value="s">S</button>
-                <button data-value="d">D</button>
-                <button data-value="f">F</button>
-                <button data-value="g">G</button>
-                <button data-value="h">H</button>
-                <button data-value="j">J</button>
-                <button data-value="k">K</button>
-                <button data-value="l">L</button>
+            <div class="d-flex justify-content-center mt-2">
+                <div class="p-1"><button data-value="s" class="btn btn-secondary">S</button></div>
+                <div class="p-1"><button data-value="d" class="btn btn-secondary">D</button></div>
+                <div class="p-1"><button data-value="f" class="btn btn-secondary">F</button></div>
+                <div class="p-1"><button data-value="g" class="btn btn-secondary">G</button></div>
+                <div class="p-1"><button data-value="h" class="btn btn-secondary">H</button></div>
+                <div class="p-1"><button data-value="j" class="btn btn-secondary">J</button></div>
+                <div class="p-1"><button data-value="k" class="btn btn-secondary">K</button></div>
             </div>
-            <div class="row">
-                <button data-value="z">Z</button>
-                <button data-value="x">X</button>
-                <button data-value="c">C</button>
-                <button data-value="v">V</button>
-                <button data-value="b">B</button>
-                <button data-value="n">N</button>
-                <button data-value="m">M</button>
+            <div class="d-flex justify-content-center mt-2">
+                <div class="p-1"><button data-value="z" class="btn btn-secondary">Z</button></div>
+                <div class="p-1"><button data-value="x" class="btn btn-secondary">X</button></div>
+                <div class="p-1"><button data-value="c" class="btn btn-secondary">C</button></div>
+                <div class="p-1"><button data-value="v" class="btn btn-secondary">V</button></div>
+                <div class="p-1"><button data-value="b" class="btn btn-secondary">B</button></div>
+                <div class="p-1"><button data-value="n" class="btn btn-secondary">N</button></div>
+                <div class="p-1"><button data-value="m" class="btn btn-secondary">M</button></div>
+            </div>
+            <div class="d-flex justify-content-center mt-2">
+                <div class="p-1"><button data-value="q" class="btn btn-secondary">Q</button></div>
+                <div class="p-1"><button data-value="a" class="btn btn-secondary">A</button></div>
+                <div class="p-1"><button data-value="w" class="btn btn-secondary">W</button></div>
+                <div class="p-1"><button data-value="p" class="btn btn-secondary">P</button></div>
+                <div class="p-1"><button data-value="l" class="btn btn-secondary">L</button></div>
             </div>
         </div>
         <div id="message"></div>

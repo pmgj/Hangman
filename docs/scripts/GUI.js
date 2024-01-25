@@ -39,7 +39,7 @@ class GUI {
             this.ctx.stroke();
             this.printBoxes(this.game.getWord());
             document.onkeyup = this.sendLetter.bind(this);
-            this.keys.forEach(k => k.className = "");
+            this.keys.forEach(k => k.className = "btn btn-secondary");
         });
     }
     printBoxes(vector) {
@@ -108,21 +108,25 @@ class GUI {
             switch (this.game.getWinner()) {
                 case Winner.WIN:
                     this.setMessage("message", "You win!");
-                    button.className = "present";
+                    button.classList.remove("btn-secondary");
+                    button.classList.add("btn-success");
                     break;
                 case Winner.LOSE:
                     this.setMessage("message", "You lose!");
-                    button.className = "absent";
+                    button.classList.remove("btn-secondary");
+                    button.classList.add("btn-danger");
                     this.printHangman();
                     break;
                 case Winner.WRONG_LETTER:
                     this.setMessage("message", "");
-                    button.className = "absent";
+                    button.classList.remove("btn-secondary");
+                    button.classList.add("btn-danger");
                     this.printHangman();
                     break;
                 case Winner.CORRECT_LETTER:
                     this.setMessage("message", "");
-                    button.className = "present";
+                    button.classList.remove("btn-secondary");
+                    button.classList.add("btn-success");
                     break;
             }
         } catch (ex) {
