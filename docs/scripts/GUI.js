@@ -55,7 +55,8 @@ class GUI {
         for (let i = 0; i < vector.length; i++) {
             let letter = vector[i];
             if (letter !== '_' && letter !== '-' && !divs[i].dataset.animation) {
-                divs[i].dataset.animation = "flip";
+                divs[i].classList.add("bg-success");
+                divs[i].classList.add("text-white");
                 divs[i].innerHTML = letter;
             }
         }
